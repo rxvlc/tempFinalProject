@@ -8,7 +8,6 @@ export default function Perfil() {
   return (
     <View style={[styles.container, { backgroundColor: darkMode ? "#111" : "#fff" }]}>
       <Text style={[styles.texto, { color: darkMode ? "#fff" : "#000" }]}>Aquí irá el perfil</Text>
-      <StatusBar style={darkMode ? "light" : "dark"} />
     </View>
   );
 }

@@ -8,7 +8,6 @@ export default function Busquedas() {
   return (
     <View style={[styles.container, { backgroundColor: darkMode ? "#111" : "#fff" }]}>
       <Text style={[styles.texto, { color: darkMode ? "#fff" : "#000" }]}>Aquí irán las búsquedas</Text>
-      <StatusBar style={darkMode ? "light" : "dark"} />
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { View, StyleSheet, TouchableOpacity, Text, Switch, Dimensions } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Switch, Dimensions, Image, PixelRatio } from "react-native";
 import { useTheme } from "../../context/ThemeContext";
 import Home from "../HomeScreens/Home";
 import Perfil from "../PerfilScreens/Perfil";
@@ -9,11 +9,12 @@ import Busqueda from "../BusquedaScreens/Busqueda";
 import Mensajes from "../MensajesScreens/Mensajes";
 
 const Tab = createBottomTabNavigator();
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export default function HomeScreen() {
   const { darkMode, setDarkMode } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
+  const modo = darkMode ? "Modo Claro" : "Modo Oscuro";
 
   return (
     <>
@@ -21,19 +22,25 @@ export default function HomeScreen() {
         screenOptions={({ route }) => ({
           headerStyle: { backgroundColor: darkMode ? "#222" : "#fff" },
           headerTintColor: darkMode ? "#fff" : "#000",
+          headerTitleAlign: "left",
+          headerTitle: () => (
+            <View style={styles.headerTitleContainer}>
+              <Image source={darkMode? require("../../images/Logos/StudXBlanco.png") : require("../../images/Logos/StudX.png") } style={[styles.headerLogo, { width: width * 0.1, height: height * 0.05 }]} />
+              <Text style={[styles.headerTitleText,{color: darkMode?"white":"black"}]}>{route.name}</Text>
+            </View>
+          ),
           headerRight: () => (
             <View style={styles.menuContainer}>
               <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
-                <Ionicons name="ellipsis-vertical" size={24} color={darkMode ? "#fff" : "#000"} />
+                <Ionicons name="ellipsis-vertical" size={PixelRatio.getPixelSizeForLayoutSize(8)} color={darkMode?"white":"black"} />
               </TouchableOpacity>
               {menuVisible && (
-               <View style={[styles.menuDropdown, { backgroundColor: darkMode ? "#333" :"white", right: width * 0.05, top: 50 }]}> 
+                <View style={[styles.menuDropdown, { backgroundColor: darkMode ? "#333" : "white", right: width * 0.05, top: height * 0.05 }]}>
                   <TouchableOpacity style={styles.menuItem} onPress={() => setDarkMode(!darkMode)}>
-                    <Text style={{ color: darkMode?"white":"black", fontSize: 16 }}>Modo Oscuro</Text>
-                    <Switch value={darkMode} onValueChange={setDarkMode} />
+                    <Text style={{ color: darkMode ? "white" : "black", fontSize: width * 0.04 }}>{modo}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.menuItem}>
-                    <Text style={{ color: darkMode?"white":"black", fontSize: 16 }}>Ajustes de Perfil</Text>
+                    <Text style={{ color: darkMode ? "white" : "black", fontSize: width * 0.04 }}>Ajustes de Perfil</Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -50,9 +57,9 @@ export default function HomeScreen() {
             else if (route.name === "Mensajes") iconName = "chatbubble-outline";
             else if (route.name === "Perfil") iconName = "person-outline";
 
-            return <Ionicons name={iconName} size={size} color={focused ? "tomato" : darkMode ? "white" : color} />;
+            return <Ionicons name={iconName} size={size} color={focused ? (darkMode ? "#FFA500" : "tomato") : darkMode ? "white" : color} />;
           },
-          tabBarActiveTintColor: "tomato",
+          tabBarActiveTintColor: darkMode ? "#FFA500" : "tomato",
           tabBarInactiveTintColor: darkMode ? "lightgray" : "gray",
           tabBarShowLabel: false,
         })}
@@ -74,24 +81,30 @@ const styles = StyleSheet.create({
   },
   menuDropdown: {
     position: "absolute",
-    marginTop: "-30%", 
+    top: height * 0.05, // Ajuste dinámico de la posición
     backgroundColor: "#333",
-    padding: 10,
+    padding: width * 0.02, // Ajuste dinámico del padding
     borderRadius: 8,
-    minWidth: 150,
+    minWidth: width * 0.4,
     elevation: 5,
-}
-,
-  text: {
-    color: "#fff",
+    alignSelf: "flex-end",
   },
-  textLight: {
-    color: "#000", 
+  headerTitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headerTitleText: {
+    fontSize: width * 0.05,
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+  headerLogo: {
+    resizeMode: "contain",
   },
   menuItem: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: height * 0.015, // Ajuste dinámico del espaciado
   },
 });
