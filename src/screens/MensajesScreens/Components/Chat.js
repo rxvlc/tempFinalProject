@@ -1,23 +1,49 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 export default function Chat({ chat, onPress }) {
+  // Función para obtener la imagen correcta
+  const getImageSource = (imageName) => {
+    const images = {
+      'img1.jpg': require('../../../images/FotosPerfil/img2.jpg'),
+      'img2.jpg': require('../../../images/FotosPerfil/img1.jpg'),
+    };
+
+    return images[imageName] || require('../../../images/FotosPerfil/img1.jpg'); // Asegura una imagen por defecto
+  };
+
   // Obtener el último mensaje del chat
-  const lastMessage = chat.messages.length > 0 ? chat.messages[chat.messages.length - 1].text : 'No hay mensajes';
+  const lastMessage = chat.messages.length > 0 
+    ? chat.messages[chat.messages.length - 1].text 
+    : 'No hay mensajes';
 
   return (
     <TouchableOpacity style={styles.chatContainer} onPress={() => onPress(chat)}>
-      <Text style={styles.chatTitle}>{chat.name}</Text>
-      <Text style={styles.lastMessage}>{lastMessage}</Text>
+      <Image source={getImageSource(chat.image)} style={styles.profileImage} />
+      <View style={styles.textContainer}>
+        <Text style={styles.chatTitle}>{chat.name}</Text>
+        <Text style={styles.lastMessage}>{lastMessage}</Text>
+      </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   chatContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  textContainer: {
+    flex: 1,
   },
   chatTitle: {
     fontSize: 18,

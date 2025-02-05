@@ -7,12 +7,12 @@ import Mensaje from './Components/Mensaje';
 
 export default function Mensajes() {
   const [chats, setChats] = useState([
-    { id: '1', name: 'Juan', ultimoMensaje: 'Hola, ¿como estas?', messages: [
+    { id: '1', name: 'Juan', image: 'img1.jpg', messages: [
         { id: 'm1', text: 'Hola, ¿cómo estás?', isOwn: false },
         { id: 'm2', text: 'con tu madre y tu?', isOwn: true }
       ]
     },
-    { id: '2', name: 'Maria', ultimoMensaje: 'Nos vemos luego.', messages: [
+    { id: '2', name: 'Maria', image: 'img2.jpg', messages: [
         { id: 'm3', text: 'Nos vemos luego. Deberiamos de mirar como implementamos todo esto en la app', isOwn: false },
         { id: 'm4', text: 'Sí, hasta pronto.', isOwn: true }
       ]

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { View, StyleSheet, TouchableOpacity, Text, Switch, Dimensions, Image, PixelRatio } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Dimensions, Image, PixelRatio } from "react-native";
 import { useTheme } from "../../context/ThemeContext";
 import Home from "../HomeScreens/Home";
 import Perfil from "../PerfilScreens/Perfil";
@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
   },
   menuDropdown: {
     position: "absolute",
-    top: height * 0.05, // Ajuste dinámico de la posición
+    top: height * 0.05, 
     backgroundColor: "#333",
-    padding: width * 0.02, // Ajuste dinámico del padding
+    padding: width * 0.02, 
     borderRadius: 8,
     minWidth: width * 0.4,
     elevation: 5,
